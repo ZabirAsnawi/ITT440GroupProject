@@ -67,14 +67,3 @@ int main() {
     close(clientSocket);
     return 0;
 }
-
-bool isNumber(const string& s)
-{
-    for (char c:s)
-    {
-        if(!isdigit(c)){
-            if(!is)
-        }
-    }
-    
-}
