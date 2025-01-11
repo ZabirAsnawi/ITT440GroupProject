@@ -38,12 +38,19 @@ int main() {
 
     int port;
     do {
-        printf("Enter port number (1-1200): ");
+        printf("Enter port number (1-65535): ");
         scanf("%d", &port);
-        if (port < 1 || port > 1200) {
-            printf("Invalid port number. Please enter a value between 1 and 1200.\n");
+
+        if (port < 1 || port > 65535) {
+            printf("Invalid port number. Please enter a value between 1 and 65535.\n");
+        } else if (port < 1024) {
+            printf("This port (%d) cannot be accessed because it is reserved for well-known services.\n", port);
+        } else if (port >= 49152) {
+            printf("This port (%d) is in the dynamic/private range, typically used for ephemeral connections.\n", port);
+        } else {
+            break; // Valid port within the general range
         }
-    } while (port < 1 || port > 1200);
+    } while (1);
 
     // Create a socket
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
