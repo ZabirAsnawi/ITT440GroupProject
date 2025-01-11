@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define PORT 8080
 #define BUFFER_SIZE 1024
 
 void handle_client(int client_socket) {
@@ -37,6 +36,15 @@ int main() {
     struct sockaddr_in server_address, client_address;
     socklen_t client_address_length = sizeof(client_address);
 
+    int port;
+    do {
+        printf("Enter port number (1-1200): ");
+        scanf("%d", &port);
+        if (port < 1 || port > 1200) {
+            printf("Invalid port number. Please enter a value between 1 and 1200.\n");
+        }
+    } while (port < 1 || port > 1200);
+
     // Create a socket
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (server_socket == -1) {
@@ -46,7 +54,7 @@ int main() {
 
     // Define the server address
     server_address.sin_family = AF_INET;
-    server_address.sin_port = htons(PORT);
+    server_address.sin_port = htons(port);
     server_address.sin_addr.s_addr = INADDR_ANY;
 
     // Bind the socket to the specified port
@@ -63,7 +71,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    printf("Server is listening on port %d...\n", PORT);
+    printf("Server is listening on port %d...\n", port);
 
     // Accept and handle incoming connections
     while ((client_socket = accept(server_socket, (struct sockaddr *)&client_address, &client_address_length)) != -1) {
