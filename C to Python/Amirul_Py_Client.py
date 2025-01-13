@@ -4,7 +4,7 @@ def main():
     print("Python TCP Client")
 
     server_ip = input("Enter server IP address: ")
-    server_port = int(input("Enter server port number: "))
+    server_port = 8080  # Fixed port number
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
         try:
